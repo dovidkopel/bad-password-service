@@ -45,3 +45,17 @@ Role should have a policy like this:
 ```
 
 Replacing region, account and table accordingly.
+
+# Free service
+We have a free endpoint to use this service if you want.
+
+```
+curl -X POST \
+  https://bad-passwords.getbabyscripts.com/ \
+  -H 'content-type: application/json' \
+  -d '{
+    "word": "foobar"
+}'
+```
+
+If the supplied word is in fact a bad password then the body will have the key `response` set to `true`.
