@@ -10,7 +10,6 @@ This tool expects the current environment to have at least this policy:
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "Stmt1496933546000",
             "Effect": "Allow",
             "Action": [
                 "dynamodb:PutItem"
