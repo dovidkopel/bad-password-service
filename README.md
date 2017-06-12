@@ -55,7 +55,9 @@ Replacing region, account and table accordingly.
 
 # Free service
 We have a free endpoint to use this service if you want.
+You may use the *https://bad-passwords.getbabyscripts.com* endpoint.
 
+We now filtered out any invalid passwords prior to querying the bad passwords database.
 ```
 curl -X POST \
   https://bad-passwords.getbabyscripts.com/ \

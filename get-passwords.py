@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import os
-import json
+import re
 from pathlib import PurePath, Path
 import boto3
 import sys
@@ -46,6 +46,16 @@ def put_password(password):
         )
     return password
 
+def is_good_password(password):
+    if (len(password) < 8
+     or not re.search("[A-Z]{1,}", password)
+     or not re.search("[a-z]{1,}", password)
+     or not re.search("[0-9]{1,}", password)
+     or not re.search("[!@#$%^&*?]{1,}", password)):
+        return False
+
+    return True
+
 def extract_passwords(p):
     lines = []
     for f in p.iterdir():
@@ -56,10 +66,12 @@ def extract_passwords(p):
             line = get_next(ff)
             while line:
                 if len(lines) == 0:
-                    lines.append(line)
+                    if is_good_password(line):
+                        lines.append(line)
 
                 line = get_next(ff)
-                lines.append(line)
+                if is_good_password(line):
+                    lines.append(line)
 
 
         except UnicodeDecodeError:
@@ -83,4 +95,4 @@ if fetch:
 p = Path('{}/Passwords'.format(tmp))
 passwords = extract_passwords(p)
 print('There are a total of {} passwords'.format(len(passwords)))
-push_passwords(p)
+push_passwords(passwords)
